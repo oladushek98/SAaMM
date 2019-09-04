@@ -1,5 +1,4 @@
 
 HIST_INTERVALS = 20
 
-LEMER_N = 5
-
+LEMER_N = 5000

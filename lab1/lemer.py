@@ -1,14 +1,8 @@
 import sympy
 
-from enum import Enum
-
 from constants import LEMER_N
-
-
-class ParamErrors(Enum):
-    NOT_PRIME = 'should be prime'
-    NOT_LESS = 'should be less then 2^N - 1'
-    NOT_ENOUGH_ONES = 'should consist more 1s in binary form'
+from utils import ParamErrors
+from utils import find_ones_in_binary
 
 
 class LemerGenerator:
@@ -21,26 +15,16 @@ class LemerGenerator:
             raise self.ParametersInitializingException(r0, ParamErrors.NOT_LESS.value, 'R0')
         elif not sympy.isprime(r0):
             raise self.ParametersInitializingException(r0, ParamErrors.NOT_PRIME.value, 'R0')
-        # # elif not self._find_ones_in_binary(r0):
+        # elif not find_ones_in_binary(r0):
         #     raise self.ParametersInitializingException(r0, ParamErrors.NOT_ENOUGH_ONES.value, 'R0')
         else:
             self.r0 = r0
-
-    def _find_ones_in_binary(self, param):
-        binary = bin(param)[2:]
-        count = 0
-        for _ in binary:
-            if _ == '1':
-                count += 1
-
-        return True if float(count/len(binary) >= 0.8) else False
 
     @property
     def sequence(self):
         sequence = []
         rn_1 = self.r0
         for _ in range(LEMER_N):
-            print(rn_1)
             rn = (rn_1 * self.a) % self.m
             rn_1 = rn
             r = rn / self.m
