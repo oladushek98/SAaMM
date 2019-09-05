@@ -1,3 +1,7 @@
+import typing
+import numpy as np
+
+from collections import namedtuple
 from enum import Enum
 from matplotlib import pyplot as plt
 
@@ -21,3 +25,17 @@ def find_ones_in_binary(param):
             count += 1
 
     return True if float(count/len(binary) >= 0.8) else False
+
+
+def calculate_mathematical_characteristics(sequence) -> typing.NamedTuple:
+    array = np.array(sequence)
+
+    m = array.mean()
+    d = array.var()
+    sig = array.std()
+
+    Characteristics = namedtuple('Characteristics', ['math_exp', 'dispersion', 'square_dev'])
+
+    result = Characteristics(m, d, sig)
+
+    return result
