@@ -5,6 +5,8 @@ from collections import namedtuple
 from enum import Enum
 from matplotlib import pyplot as plt
 
+from constants import LEMER_N
+
 
 class ParamErrors(Enum):
     NOT_PRIME = 'should be prime'
@@ -39,3 +41,12 @@ def calculate_mathematical_characteristics(sequence) -> typing.NamedTuple:
     result = Characteristics(m, d, sig)
 
     return result
+
+
+def checks_on_circumstantial_evidence(sequence):
+    pairs_list = [(sequence[i], sequence[i + 1]) for i in range(0, len(sequence), 2)]
+    k_list = list(filter(lambda pair: pow(pair[0], 2) + pow(pair[1], 2) < 1, pairs_list))
+    k = len(k_list)
+
+    print(f'Got ratio: {2 * k / LEMER_N}')
+    print(f'Need ration: {np.pi / 4}')

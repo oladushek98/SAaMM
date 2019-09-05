@@ -24,11 +24,15 @@ class LemerGenerator:
     def sequence(self):
         sequence = []
         rn_1 = self.r0
+
         for _ in range(LEMER_N):
             rn = (rn_1 * self.a) % self.m
             rn_1 = rn
             r = rn / self.m
             sequence.append(r)
+
+        if LEMER_N % 2 != 0:
+            sequence.append(sum((sequence[-1], sequence[-3], sequence[-5])) / 3)
 
         return sequence
 
