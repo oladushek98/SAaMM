@@ -18,6 +18,9 @@ def create_hist(sequence, intervals):
     plt.hist(sequence, intervals)
     plt.show()
 
+    plt.plot(range(len(sequence)), sequence, 'bo')
+    plt.show()
+
 
 def find_ones_in_binary(param):
     binary = bin(param)[2:]

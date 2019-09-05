@@ -27,3 +27,13 @@ if __name__ == '__main__':
     print()
 
     checks_on_circumstantial_evidence(sequence)
+
+    xv = sequence[-1]
+    lst = []
+    for i in range(len(sequence)):
+        if sequence[i] == xv:
+            if len(lst) >= 2:
+                break
+            lst.append(i)
+    p = lst[1] - lst[0]
+    print(p)
