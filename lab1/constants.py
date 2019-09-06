@@ -10,3 +10,6 @@ M = 65533
 # uniform distribution constants
 AU = 5
 BU = 7
+
+# exponential distribution constants
+EXP_N = 10

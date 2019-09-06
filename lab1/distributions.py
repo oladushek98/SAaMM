@@ -1,5 +1,7 @@
 import numpy as np
 
+from utils import calculate_mathematical_characteristics
+
 
 class SequenceMixin:
     SEQUENCE = []
@@ -33,3 +35,19 @@ class UniformDistribution:
     @property
     def square_dev(self):
         return np.array(self.sequence).std()
+
+
+class GaussDistribution:
+
+    def __init__(self, n):
+        self.n = n
+
+
+class ExponentialDistribution:
+
+    def __init__(self, lamb):
+        self.lamb = lamb
+
+    @property
+    def sequence(self):
+        return [-np.log(item) / self.lamb for item in SequenceMixin.SEQUENCE]
