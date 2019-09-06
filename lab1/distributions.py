@@ -51,3 +51,27 @@ class ExponentialDistribution:
     @property
     def sequence(self):
         return [-np.log(item) / self.lamb for item in SequenceMixin.SEQUENCE]
+
+
+class GammaDistribution:
+
+    def __init__(self, tett, lamb):
+        self.tett = tett
+        self.lamb = lamb
+
+    @property
+    def sequence(self):
+        return [-np.log(sum(SequenceMixin.SEQUENCE[:i + 1])) / self.lamb for i in range(self.tett)]
+
+    @property
+    def mean(self):
+        return self.tett / self.lamb
+
+    @property
+    def dispersion(self):
+        return self.tett / (self.lamb ** 2)
+
+    @property
+    def square_dev(self):
+        return np.array(self.sequence).std()
+

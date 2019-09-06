@@ -1,5 +1,5 @@
 from constants import HIST_INTERVALS, A, R0, M, AU, BU, EXP_N
-from distributions import UniformDistribution, SequenceMixin, ExponentialDistribution
+from distributions import UniformDistribution, SequenceMixin, ExponentialDistribution, GammaDistribution
 from lemer import LemerGenerator
 from utils import (create_hist, calculate_mathematical_characteristics,
                    checks_on_circumstantial_evidence)
@@ -30,6 +30,7 @@ if __name__ == '__main__':
     print()
 
     checks_on_circumstantial_evidence(sequence)
+    print()
 
     temp = SequenceMixin(sequence)
 
@@ -40,6 +41,7 @@ if __name__ == '__main__':
     print(f'Math expectation = {uniform.mean}')
     print(f'Dispersion = {uniform.dispersion}')
     print(f'Mean square deviation = {uniform.square_dev}')
+    print()
 
     # Exponential Distribution
     exp = ExponentialDistribution(EXP_N)
@@ -49,4 +51,15 @@ if __name__ == '__main__':
     print(f'Math expectation = {characteristics.math_exp}')
     print(f'Dispersion = {characteristics.dispersion}')
     print(f'Mean square deviation = {characteristics.square_dev}')
+    print()
+
+    # Gamma Distribution
+    gamma = GammaDistribution(EXP_N, 45)
+    create_hist(gamma.sequence, HIST_INTERVALS)
+    print('Gamma Distribution:')
+    print(f'Math expectation = {gamma.mean}')
+    print(f'Dispersion = {gamma.dispersion}')
+    print(f'Mean square deviation = {gamma.square_dev}')
+    print()
+
 
