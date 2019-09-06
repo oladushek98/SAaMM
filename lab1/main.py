@@ -1,4 +1,5 @@
-from constants import HIST_INTERVALS, A, R0, M
+from constants import HIST_INTERVALS, A, R0, M, AU, BU
+from distributions import UniformDistribution
 from lemer import LemerGenerator
 from utils import (create_hist, calculate_mathematical_characteristics,
                    checks_on_circumstantial_evidence)
@@ -27,3 +28,7 @@ if __name__ == '__main__':
     print()
 
     checks_on_circumstantial_evidence(sequence)
+
+    uniform = UniformDistribution(AU, BU, sequence)
+    create_hist(uniform.sequence, HIST_INTERVALS)
+    print(uniform.mean, uniform.dispersion, uniform.square_dev)
