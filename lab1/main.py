@@ -1,5 +1,5 @@
 from constants import HIST_INTERVALS, A, R0, M, AU, BU
-from distributions import UniformDistribution
+from distributions import UniformDistribution, SequenceMixin
 from lemer import LemerGenerator
 from utils import (create_hist, calculate_mathematical_characteristics,
                    checks_on_circumstantial_evidence)
@@ -29,6 +29,8 @@ if __name__ == '__main__':
 
     checks_on_circumstantial_evidence(sequence)
 
-    uniform = UniformDistribution(AU, BU, sequence)
+    temp = SequenceMixin(sequence)
+
+    uniform = UniformDistribution(AU, BU)
     create_hist(uniform.sequence, HIST_INTERVALS)
     print(uniform.mean, uniform.dispersion, uniform.square_dev)

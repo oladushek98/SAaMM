@@ -1,19 +1,26 @@
 import numpy as np
 
-from lemer import LemerGenerator
-# from main import sequence as SEQUENCE
+
+class SequenceMixin:
+    SEQUENCE = []
+
+    def __init__(self, seq):
+        self.sequence_setter(seq)
+
+    @classmethod
+    def sequence_setter(cls, seq):
+        cls.SEQUENCE = seq
 
 
 class UniformDistribution:
 
-    def __init__(self, a, b, seq):
+    def __init__(self, a, b):
         self.a = a
         self.b = b
-        self.lemer = seq
 
     @property
     def sequence(self):
-        return [self.a + (self.b - self.a) * item for item in self.lemer]
+        return [self.a + (self.b - self.a) * item for item in SequenceMixin.SEQUENCE]
 
     @property
     def mean(self):
