@@ -61,7 +61,7 @@ class GammaDistribution:
 
     @property
     def sequence(self):
-        return [-np.log(sum(SequenceMixin.SEQUENCE[:i + 1])) / self.lamb for i in range(self.tett)]
+        return [-(sum(np.log(SequenceMixin.SEQUENCE[i]))) / self.lamb for i in range(self.tett)]
 
     @property
     def mean(self):
