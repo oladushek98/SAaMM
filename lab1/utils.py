@@ -5,7 +5,7 @@ from collections import namedtuple
 from enum import Enum
 from matplotlib import pyplot as plt
 
-from constants import LEMER_N, HIST_INTERVALS
+from constants import LEMER_N, HIST_INTERVALS, LEMER
 
 
 class ParamErrors(Enum):
@@ -38,9 +38,7 @@ def calculate_mathematical_characteristics(sequence) -> typing.NamedTuple:
 
     Characteristics = namedtuple('Characteristics', ['math_exp', 'dispersion', 'square_dev'])
 
-    result = Characteristics(m, d, sig)
-
-    return result
+    return Characteristics(m, d, sig)
 
 
 def checks_on_circumstantial_evidence(sequence):
@@ -61,10 +59,10 @@ def show_info(obj, dist):
     except AttributeError:
         math_exp, dispersion, square_dev = calculate_mathematical_characteristics(obj.sequence)
     finally:
-        if dist == 'Lemer':
+        if dist == LEMER:
             print(f'{dist} Generator Results:')
         else:
-            print(f'{dist} Distribution')
+            print(f'{dist} Distribution:')
         print(f'Math expectation = {math_exp}')
         print(f'Dispersion = {dispersion}')
         print(f'Mean square deviation = {square_dev}')

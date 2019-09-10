@@ -13,3 +13,12 @@ BU = 7
 
 # exponential distribution constants
 EXP_N = 10
+
+
+UNIFORM = 'Uniform'
+GAUSS = 'Gauss'
+GAMMA = 'Gamma'
+EXPONENTIAL = 'Exponential'
+SIMPSON = 'Simpson'
+TRIANGULAR = 'Triangular'
+LEMER = 'Lemer'
