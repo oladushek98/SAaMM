@@ -5,7 +5,7 @@ from collections import namedtuple
 from enum import Enum
 from matplotlib import pyplot as plt
 
-from constants import LEMER_N
+from constants import LEMER_N, HIST_INTERVALS
 
 
 class ParamErrors(Enum):
@@ -50,3 +50,22 @@ def checks_on_circumstantial_evidence(sequence):
 
     print(f'Got ratio: {2 * k / LEMER_N}')
     print(f'Need ration: {np.pi / 4}')
+
+
+def show_info(obj, dist):
+
+    create_hist(obj.sequence, HIST_INTERVALS)
+
+    try:
+        math_exp, dispersion, square_dev = obj.math_exp, obj.dispersion, obj.square_dev
+    except AttributeError:
+        math_exp, dispersion, square_dev = calculate_mathematical_characteristics(obj.sequence)
+    finally:
+        if dist == 'Lemer':
+            print(f'{dist} Generator Results:')
+        else:
+            print(f'{dist} Distribution')
+        print(f'Math expectation = {math_exp}')
+        print(f'Dispersion = {dispersion}')
+        print(f'Mean square deviation = {square_dev}')
+        print()
