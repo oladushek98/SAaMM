@@ -1,7 +1,7 @@
 from constants import (A, R0, M, AU, BU, EXP_N,
-                       LEMER, UNIFORM, EXPONENTIAL, GAMMA, TRIANGULAR, SIMPSON)
+                       LEMER, UNIFORM, EXPONENTIAL, GAMMA, TRIANGULAR, SIMPSON, GAUSSIAN_N, GAUSS)
 from distributions import (UniformDistribution, SequenceMixin, ExponentialDistribution, GammaDistribution,
-                           TriangularDistribution, SimpsonDistribution)
+                           TriangularDistribution, SimpsonDistribution, GaussDistribution)
 from lemer import LemerGenerator
 from utils import (checks_on_circumstantial_evidence, show_info)
 
@@ -30,6 +30,10 @@ if __name__ == '__main__':
     # Uniform Distribution
     uniform = UniformDistribution(AU, BU)
     show_info(uniform, UNIFORM)
+
+    # Gaussian Distribution
+    gauss = GaussDistribution(GAUSSIAN_N, 1, 0.5)
+    show_info(gauss, GAUSS)
 
     # Exponential Distribution
     exp = ExponentialDistribution(EXP_N)
