@@ -1,4 +1,5 @@
-from constants import A, R0, M, AU, BU, EXP_N
+from constants import (A, R0, M, AU, BU, EXP_N,
+                       LEMER, UNIFORM, EXPONENTIAL, GAMMA, TRIANGULAR, SIMPSON)
 from distributions import (UniformDistribution, SequenceMixin, ExponentialDistribution, GammaDistribution,
                            TriangularDistribution, SimpsonDistribution)
 from lemer import LemerGenerator
@@ -19,7 +20,7 @@ if __name__ == '__main__':
     m = M
 
     res = LemerGenerator(a, r0, m)
-    show_info(res, 'Lemer')
+    show_info(res, LEMER)
 
     checks_on_circumstantial_evidence(res.sequence)
     print()
@@ -28,20 +29,20 @@ if __name__ == '__main__':
 
     # Uniform Distribution
     uniform = UniformDistribution(AU, BU)
-    show_info(uniform, 'Uniform')
+    show_info(uniform, UNIFORM)
 
     # Exponential Distribution
     exp = ExponentialDistribution(EXP_N)
-    show_info(exp, 'Exponential')
+    show_info(exp, EXPONENTIAL)
 
     # Gamma Distribution
     gamma = GammaDistribution(EXP_N, 45)
-    show_info(gamma, 'Gamma')
+    show_info(gamma, GAMMA)
 
     # Triangular Distribution
     triangle = TriangularDistribution(7, 12)
-    show_info(triangle, 'Triangular')
+    show_info(triangle, TRIANGULAR)
 
     # Simpson Distribution
     simpson = SimpsonDistribution(7, 12)
-    show_info(simpson, 'Simpson')
+    show_info(simpson, SIMPSON)
