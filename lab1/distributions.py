@@ -37,8 +37,27 @@ class UniformDistribution:
 
 class GaussDistribution:
 
-    def __init__(self, n):
+    def __init__(self, n, mean, std):
         self.n = n
+        self.mean = mean
+        self.std = std
+
+    @property
+    def sequence(self):
+        return [self.mean + self.std * np.sqrt(12 / self.n) * (sum(SequenceMixin.SEQUENCE[i:i + self.n]) - self.n / 2)
+                for i in range(0, len(SequenceMixin.SEQUENCE), self.n)]
+
+    @property
+    def math_exp(self):
+        return self.mean
+
+    @property
+    def dispersion(self):
+        return np.array(self.sequence).var()
+
+    @property
+    def square_dev(self):
+        return self.std
 
 
 class ExponentialDistribution:
