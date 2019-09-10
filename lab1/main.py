@@ -1,5 +1,6 @@
 from constants import HIST_INTERVALS, A, R0, M, AU, BU, EXP_N
-from distributions import UniformDistribution, SequenceMixin, ExponentialDistribution, GammaDistribution
+from distributions import UniformDistribution, SequenceMixin, ExponentialDistribution, GammaDistribution, \
+    TriangularDistribution
 from lemer import LemerGenerator
 from utils import (create_hist, calculate_mathematical_characteristics,
                    checks_on_circumstantial_evidence)
@@ -62,4 +63,12 @@ if __name__ == '__main__':
     print(f'Mean square deviation = {gamma.square_dev}')
     print()
 
-
+    # Triangular Distribution
+    triangle = TriangularDistribution(7, 12)
+    create_hist(triangle.sequence, HIST_INTERVALS)
+    characteristics = calculate_mathematical_characteristics(triangle.sequence)
+    print('Triangular Distribution:')
+    print(f'Math expectation = {characteristics.math_exp}')
+    print(f'Dispersion = {characteristics.dispersion}')
+    print(f'Mean square deviation = {characteristics.square_dev}')
+    print()
