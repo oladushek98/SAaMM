@@ -61,7 +61,7 @@ class GammaDistribution:
 
     @property
     def sequence(self):
-        return [-(sum(np.log(SequenceMixin.SEQUENCE[i]))) / self.lamb for i in range(self.tett)]
+        return [-(sum(np.log(SequenceMixin.SEQUENCE[:i]))) / self.lamb for i in range(self.tett)]
 
     @property
     def mean(self):
@@ -75,3 +75,20 @@ class GammaDistribution:
     def square_dev(self):
         return np.array(self.sequence).std()
 
+
+class TriangularDistribution:
+
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+
+    @property
+    def sequence(self):
+        right_list = [self.a + (self.b - self.a) * max(SequenceMixin.SEQUENCE[i], SequenceMixin.SEQUENCE[i + 1])
+                      for i in range(0, len(SequenceMixin.SEQUENCE), 2)
+                      if SequenceMixin.SEQUENCE[i] < SequenceMixin.SEQUENCE[i + 1]]
+        left_list = [self.a + (self.b - self.a) * min(SequenceMixin.SEQUENCE[i], SequenceMixin.SEQUENCE[i + 1])
+                     for i in range(0, len(SequenceMixin.SEQUENCE), 2)
+                     if SequenceMixin.SEQUENCE[i] + SequenceMixin.SEQUENCE[i + 1] < 1]
+
+        return right_list + left_list
