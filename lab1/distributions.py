@@ -1,7 +1,5 @@
 import numpy as np
 
-from utils import calculate_mathematical_characteristics
-
 
 class SequenceMixin:
     SEQUENCE = []
@@ -25,7 +23,7 @@ class UniformDistribution:
         return [self.a + (self.b - self.a) * item for item in SequenceMixin.SEQUENCE]
 
     @property
-    def mean(self):
+    def math_exp(self):
         return (self.a + self.b) / 2
 
     @property
@@ -64,7 +62,7 @@ class GammaDistribution:
         return [-(sum(np.log(SequenceMixin.SEQUENCE[:i]))) / self.lamb for i in range(self.tett)]
 
     @property
-    def mean(self):
+    def math_exp(self):
         return self.tett / self.lamb
 
     @property
@@ -92,3 +90,15 @@ class TriangularDistribution:
                      if SequenceMixin.SEQUENCE[i] + SequenceMixin.SEQUENCE[i + 1] < 1]
 
         return right_list + left_list
+
+
+class SimpsonDistribution:
+
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+        self.uniform = UniformDistribution(self.a / 2, self.b / 2)
+
+    @property
+    def sequence(self):
+        return list(map(sum, zip(self.uniform.sequence[::2], self.uniform.sequence[1::2])))

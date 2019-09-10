@@ -1,9 +1,8 @@
-from constants import HIST_INTERVALS, A, R0, M, AU, BU, EXP_N
-from distributions import UniformDistribution, SequenceMixin, ExponentialDistribution, GammaDistribution, \
-    TriangularDistribution
+from constants import A, R0, M, AU, BU, EXP_N
+from distributions import (UniformDistribution, SequenceMixin, ExponentialDistribution, GammaDistribution,
+                           TriangularDistribution, SimpsonDistribution)
 from lemer import LemerGenerator
-from utils import (create_hist, calculate_mathematical_characteristics,
-                   checks_on_circumstantial_evidence)
+from utils import (checks_on_circumstantial_evidence, show_info)
 
 if __name__ == '__main__':
 
@@ -20,55 +19,29 @@ if __name__ == '__main__':
     m = M
 
     res = LemerGenerator(a, r0, m)
-    sequence = res.sequence
-    create_hist(sequence, HIST_INTERVALS)
+    show_info(res, 'Lemer')
 
-    characteristics = calculate_mathematical_characteristics(sequence)
-    print('Lemer Generator Results:')
-    print(f'Math expectation = {characteristics.math_exp}')
-    print(f'Dispersion = {characteristics.dispersion}')
-    print(f'Mean square deviation = {characteristics.square_dev}')
+    checks_on_circumstantial_evidence(res.sequence)
     print()
 
-    checks_on_circumstantial_evidence(sequence)
-    print()
-
-    temp = SequenceMixin(sequence)
+    temp = SequenceMixin(res.sequence)
 
     # Uniform Distribution
     uniform = UniformDistribution(AU, BU)
-    create_hist(uniform.sequence, HIST_INTERVALS)
-    print('Uniform Distribution Results:')
-    print(f'Math expectation = {uniform.mean}')
-    print(f'Dispersion = {uniform.dispersion}')
-    print(f'Mean square deviation = {uniform.square_dev}')
-    print()
+    show_info(uniform, 'Uniform')
 
     # Exponential Distribution
     exp = ExponentialDistribution(EXP_N)
-    create_hist(exp.sequence, HIST_INTERVALS)
-    characteristics = calculate_mathematical_characteristics(exp.sequence)
-    print('Exponential Distribution:')
-    print(f'Math expectation = {characteristics.math_exp}')
-    print(f'Dispersion = {characteristics.dispersion}')
-    print(f'Mean square deviation = {characteristics.square_dev}')
-    print()
+    show_info(exp, 'Exponential')
 
     # Gamma Distribution
     gamma = GammaDistribution(EXP_N, 45)
-    create_hist(gamma.sequence, HIST_INTERVALS)
-    print('Gamma Distribution:')
-    print(f'Math expectation = {gamma.mean}')
-    print(f'Dispersion = {gamma.dispersion}')
-    print(f'Mean square deviation = {gamma.square_dev}')
-    print()
+    show_info(gamma, 'Gamma')
 
     # Triangular Distribution
     triangle = TriangularDistribution(7, 12)
-    create_hist(triangle.sequence, HIST_INTERVALS)
-    characteristics = calculate_mathematical_characteristics(triangle.sequence)
-    print('Triangular Distribution:')
-    print(f'Math expectation = {characteristics.math_exp}')
-    print(f'Dispersion = {characteristics.dispersion}')
-    print(f'Mean square deviation = {characteristics.square_dev}')
-    print()
+    show_info(triangle, 'Triangular')
+
+    # Simpson Distribution
+    simpson = SimpsonDistribution(7, 12)
+    show_info(simpson, 'Simpson')
