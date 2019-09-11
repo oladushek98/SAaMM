@@ -18,6 +18,9 @@ def create_hist(sequence, intervals):
     plt.hist(sequence, intervals)
     plt.show()
 
+    # plt.plot(range(len(sequence)), sequence, 'bo')
+    # plt.show()
+
 
 def find_ones_in_binary(param):
     binary = bin(param)[2:]
@@ -67,3 +70,29 @@ def show_info(obj, dist):
         print(f'Dispersion = {dispersion}')
         print(f'Mean square deviation = {square_dev}')
         print()
+
+
+def calculate_period(sequence):
+    xv = sequence[-1]
+    values = []
+    for i in range(len(sequence)):
+        if sequence[i] == xv:
+            if len(values) >= 2:
+                break
+            values.append(i)
+    try:
+        p = values[1] - values[0]
+        print(f'Period = {p}')
+    except IndexError:
+        print('No period here!')
+
+    for i in range(len(sequence)):
+        try:
+            if sequence[i] == sequence[i + p]:
+                index = i
+                print(f'Aperiodical length = {index + p}')
+                break
+        except IndexError:
+            print('No aperiodical length')
+        except UnboundLocalError:
+            print('No aperiodical length')

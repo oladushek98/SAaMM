@@ -1,5 +1,8 @@
 import numpy as np
 
+from lemer import LemerGenerator
+from constants import A, R0, M, LEMER_N
+
 
 class SequenceMixin:
     SEQUENCE = []
@@ -70,15 +73,28 @@ class ExponentialDistribution:
         return [-np.log(item) / self.lamb for item in SequenceMixin.SEQUENCE]
 
 
-class GammaDistribution:
+class GammaDistribution(LemerGenerator):
 
     def __init__(self, tett, lamb):
+        super().__init__(A, R0, M, LEMER_N * tett)
         self.tett = tett
         self.lamb = lamb
+        self.lemer_sequence = super().sequence
 
     @property
     def sequence(self):
-        return [-(sum(np.log(SequenceMixin.SEQUENCE[:i]))) / self.lamb for i in range(self.tett)]
+        # return [-(sum(np.log(SequenceMixin.SEQUENCE[:i]))) / self.lamb for i in range(self.tett)]
+        # return [[-(1 / self.lamb) * sum(np.log(self.lemer_sequence[x + i]) for i in range(self.tett))]
+        #        for x in range(0, len(self.lemer_sequence), self.tett)]
+        def product(x):
+            if self.tett == 1:
+                return x
+            result = 1
+            for i in range(self.lemer_sequence.index(x), self.lemer_sequence.index(x) + self.tett):
+                result *= self.lemer_sequence[i - (self.tett - 1)]
+            return result
+
+        return list(map(lambda x: -1 / self.lamb * np.log(product(x)), self.lemer_sequence))
 
     @property
     def math_exp(self):

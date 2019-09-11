@@ -1,12 +1,12 @@
 
-HIST_INTERVALS = 20
+HIST_INTERVALS = 50
 
-LEMER_N = 5000000
+LEMER_N = 15000000
 GAUSSIAN_N = 6
 
-A = 31321
-R0 = 65521
-M = 65533
+A = 2_147_483_629
+R0 = 99991
+M = 2 ** 32
 
 # uniform distribution constants
 AU = 5

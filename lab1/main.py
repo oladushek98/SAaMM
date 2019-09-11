@@ -1,9 +1,9 @@
 from constants import (A, R0, M, AU, BU, EXP_N,
-                       LEMER, UNIFORM, EXPONENTIAL, GAMMA, TRIANGULAR, SIMPSON, GAUSSIAN_N, GAUSS)
+                       LEMER, UNIFORM, EXPONENTIAL, GAMMA, TRIANGULAR, SIMPSON, GAUSSIAN_N, GAUSS, LEMER_N)
 from distributions import (UniformDistribution, SequenceMixin, ExponentialDistribution, GammaDistribution,
                            TriangularDistribution, SimpsonDistribution, GaussDistribution)
 from lemer import LemerGenerator
-from utils import (checks_on_circumstantial_evidence, show_info)
+from utils import (checks_on_circumstantial_evidence, show_info, calculate_period)
 
 if __name__ == '__main__':
 
@@ -19,13 +19,15 @@ if __name__ == '__main__':
     r0 = R0
     m = M
 
-    res = LemerGenerator(a, r0, m)
-    show_info(res, LEMER)
+    lemer = LemerGenerator(a, r0, m, LEMER_N)
+    show_info(lemer, LEMER)
 
-    checks_on_circumstantial_evidence(res.sequence)
+    checks_on_circumstantial_evidence(lemer.sequence)
+    print()
+    calculate_period(lemer.sequence)
     print()
 
-    temp = SequenceMixin(res.sequence)
+    temp = SequenceMixin(lemer.sequence)
 
     # Uniform Distribution
     uniform = UniformDistribution(AU, BU)
@@ -40,7 +42,7 @@ if __name__ == '__main__':
     show_info(exp, EXPONENTIAL)
 
     # Gamma Distribution
-    gamma = GammaDistribution(EXP_N, 45)
+    gamma = GammaDistribution(4, 5)
     show_info(gamma, GAMMA)
 
     # Triangular Distribution
@@ -50,3 +52,13 @@ if __name__ == '__main__':
     # Simpson Distribution
     simpson = SimpsonDistribution(7, 12)
     show_info(simpson, SIMPSON)
+
+    xv = lemer.sequence[-1]
+    lst = []
+    for i in range(len(lemer.sequence)):
+        if lemer.sequence[i] == xv:
+            if len(lst) >= 2:
+                break
+            lst.append(i)
+    p = lst[1] - lst[0]
+    print(p)
