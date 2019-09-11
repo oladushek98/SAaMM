@@ -1,17 +1,16 @@
 import sympy
 
-from constants import LEMER_N
 from utils import ParamErrors
-from utils import find_ones_in_binary
 
 
 class LemerGenerator:
 
-    def __init__(self, a: int, r0: int, m: int):
+    def __init__(self, a: int, r0: int, m: int, n):
         self.a = a
         self.m = m
+        self.lemer_n = n
 
-        if r0 >= (pow(2, LEMER_N) - 1):
+        if r0 >= (pow(2, self.lemer_n) - 1):
             raise self.ParametersInitializingException(r0, ParamErrors.NOT_LESS.value, 'R0')
         elif not sympy.isprime(r0):
             raise self.ParametersInitializingException(r0, ParamErrors.NOT_PRIME.value, 'R0')
@@ -25,13 +24,13 @@ class LemerGenerator:
         sequence = []
         rn_1 = self.r0
 
-        for _ in range(LEMER_N):
+        for _ in range(self.lemer_n):
             rn = (rn_1 * self.a) % self.m
             rn_1 = rn
             r = rn / self.m
             sequence.append(r)
 
-        if LEMER_N % 2 != 0:
+        if self.lemer_n % 2 != 0:
             sequence.append(sum((sequence[-1], sequence[-3], sequence[-5])) / 3)
 
         return sequence

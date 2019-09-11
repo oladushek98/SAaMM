@@ -1,5 +1,5 @@
 from constants import (A, R0, M, AU, BU, EXP_N,
-                       LEMER, UNIFORM, EXPONENTIAL, GAMMA, TRIANGULAR, SIMPSON, GAUSSIAN_N, GAUSS)
+                       LEMER, UNIFORM, EXPONENTIAL, GAMMA, TRIANGULAR, SIMPSON, GAUSSIAN_N, GAUSS, LEMER_N)
 from distributions import (UniformDistribution, SequenceMixin, ExponentialDistribution, GammaDistribution,
                            TriangularDistribution, SimpsonDistribution, GaussDistribution)
 from lemer import LemerGenerator
@@ -19,7 +19,7 @@ if __name__ == '__main__':
     r0 = R0
     m = M
 
-    res = LemerGenerator(a, r0, m)
+    res = LemerGenerator(a, r0, m, LEMER_N)
     show_info(res, LEMER)
 
     checks_on_circumstantial_evidence(res.sequence)
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     show_info(exp, EXPONENTIAL)
 
     # Gamma Distribution
-    gamma = GammaDistribution(EXP_N, 45)
+    gamma = GammaDistribution(4, 5)
     show_info(gamma, GAMMA)
 
     # Triangular Distribution
