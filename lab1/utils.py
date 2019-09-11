@@ -18,19 +18,6 @@ def create_hist(sequence, intervals):
     plt.hist(sequence, intervals)
     plt.show()
 
-    # plt.plot(range(len(sequence)), sequence, 'bo')
-    # plt.show()
-
-
-def find_ones_in_binary(param):
-    binary = bin(param)[2:]
-    count = 0
-    for _ in binary:
-        if _ == '1':
-            count += 1
-
-    return True if float(count/len(binary) >= 0.8) else False
-
 
 def calculate_mathematical_characteristics(sequence) -> typing.NamedTuple:
     array = np.array(sequence)
@@ -57,19 +44,16 @@ def show_info(obj, dist):
 
     create_hist(obj.sequence, HIST_INTERVALS)
 
-    try:
-        math_exp, dispersion, square_dev = obj.math_exp, obj.dispersion, obj.square_dev
-    except AttributeError:
-        math_exp, dispersion, square_dev = calculate_mathematical_characteristics(obj.sequence)
-    finally:
-        if dist == LEMER:
-            print(f'{dist} Generator Results:')
-        else:
-            print(f'{dist} Distribution:')
-        print(f'Math expectation = {math_exp}')
-        print(f'Dispersion = {dispersion}')
-        print(f'Mean square deviation = {square_dev}')
-        print()
+    math_exp, dispersion, square_dev = calculate_mathematical_characteristics(obj.sequence)
+
+    if dist == LEMER:
+        print(f'{dist} Generator Results:')
+    else:
+        print(f'{dist} Distribution:')
+    print(f'Math expectation = {math_exp}')
+    print(f'Dispersion = {dispersion}')
+    print(f'Mean square deviation = {square_dev}')
+    print()
 
 
 def calculate_period(sequence):
@@ -86,13 +70,10 @@ def calculate_period(sequence):
     except IndexError:
         print('No period here!')
 
-    for i in range(len(sequence)):
-        try:
+    try:
+        for i in range(len(sequence)):
             if sequence[i] == sequence[i + p]:
-                index = i
-                print(f'Aperiodical length = {index + p}')
+                print(f'Aperiodic length = {i + p}')
                 break
-        except IndexError:
-            print('No aperiodical length')
-        except UnboundLocalError:
-            print('No aperiodical length')
+    except (IndexError, UnboundLocalError) as e:
+        print('No aperiodic length')

@@ -1,20 +1,42 @@
+HIST_INTERVALS = 20
 
-HIST_INTERVALS = 50
+LEMER_N = 500000
 
-LEMER_N = 15000000
-GAUSSIAN_N = 6
+# no period here
+# A = 1103515245
+# R0 = 65521
+# M = 2 ** 32
 
-A = 2_147_483_629
-R0 = 99991
-M = 2 ** 32
+# period = 50000
+A = 32771
+R0 = 65537
+M = 1000000
+# period = 348842
+# M = 1046527
 
 # uniform distribution constants
-AU = 5
-BU = 7
+UNIFORM_A = 0
+UNIFORM_B = 1000
 
 # exponential distribution constants
-EXP_N = 10
+EXPONENTIAL_LAMB = 2.5
 
+# gaussian distribution constants
+GAUSSIAN_N = 6
+GAUSSIAN_MEAN = -50
+GAUSSIAN_STD = 40
+
+# gamma distribution constants
+GAMMA_TETT = 8
+GAMMA_LAMB = 8
+
+# triangle distribution constants
+TRIANGLE_A = 100
+TRIANGLE_B = 200
+
+# simpson distribution constants
+SIMPSON_A = 0
+SIMPSON_B = 1000
 
 UNIFORM = 'Uniform'
 GAUSS = 'Gauss'

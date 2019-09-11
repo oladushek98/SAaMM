@@ -1,11 +1,12 @@
 import numpy as np
 
 from lemer import LemerGenerator
-from constants import A, R0, M, LEMER_N
+from constants import A, R0, M
 
 
 class SequenceMixin:
     SEQUENCE = []
+    LEN = 0
 
     def __init__(self, seq):
         self.sequence_setter(seq)
@@ -13,6 +14,7 @@ class SequenceMixin:
     @classmethod
     def sequence_setter(cls, seq):
         cls.SEQUENCE = seq
+        cls.LEN = len(seq)
 
 
 class UniformDistribution:
@@ -25,18 +27,6 @@ class UniformDistribution:
     def sequence(self):
         return [self.a + (self.b - self.a) * item for item in SequenceMixin.SEQUENCE]
 
-    @property
-    def math_exp(self):
-        return (self.a + self.b) / 2
-
-    @property
-    def dispersion(self):
-        return ((self.b - self.a) ** 2) / 12
-
-    @property
-    def square_dev(self):
-        return np.array(self.sequence).std()
-
 
 class GaussDistribution:
 
@@ -47,20 +37,11 @@ class GaussDistribution:
 
     @property
     def sequence(self):
-        return [self.mean + self.std * np.sqrt(12 / self.n) * (sum(SequenceMixin.SEQUENCE[i:i + self.n]) - self.n / 2)
-                for i in range(0, len(SequenceMixin.SEQUENCE), self.n)]
-
-    @property
-    def math_exp(self):
-        return self.mean
-
-    @property
-    def dispersion(self):
-        return np.array(self.sequence).var()
-
-    @property
-    def square_dev(self):
-        return self.std
+        return [
+                self.mean + self.std * np.sqrt(12 / self.n) *
+                (sum(SequenceMixin.SEQUENCE[i:i + self.n]) - self.n / 2)
+                for i in range(0, SequenceMixin.LEN, self.n)
+        ]
 
 
 class ExponentialDistribution:
@@ -75,38 +56,24 @@ class ExponentialDistribution:
 
 class GammaDistribution(LemerGenerator):
 
-    def __init__(self, tett, lamb):
-        super().__init__(A, R0, M, LEMER_N * tett)
+    def __init__(self, tett, lamb, length=1000):
+        super().__init__(A, R0, M, length * tett)
         self.tett = tett
         self.lamb = lamb
         self.lemer_sequence = super().sequence
 
     @property
     def sequence(self):
-        # return [-(sum(np.log(SequenceMixin.SEQUENCE[:i]))) / self.lamb for i in range(self.tett)]
-        # return [[-(1 / self.lamb) * sum(np.log(self.lemer_sequence[x + i]) for i in range(self.tett))]
-        #        for x in range(0, len(self.lemer_sequence), self.tett)]
-        def product(x):
+        def vector(x):
             if self.tett == 1:
                 return x
             result = 1
             for i in range(self.lemer_sequence.index(x), self.lemer_sequence.index(x) + self.tett):
                 result *= self.lemer_sequence[i - (self.tett - 1)]
+
             return result
 
-        return list(map(lambda x: -1 / self.lamb * np.log(product(x)), self.lemer_sequence))
-
-    @property
-    def math_exp(self):
-        return self.tett / self.lamb
-
-    @property
-    def dispersion(self):
-        return self.tett / (self.lamb ** 2)
-
-    @property
-    def square_dev(self):
-        return np.array(self.sequence).std()
+        return list(map(lambda x: -1 / self.lamb * np.log(vector(x)), self.lemer_sequence))
 
 
 class TriangularDistribution:
@@ -117,12 +84,16 @@ class TriangularDistribution:
 
     @property
     def sequence(self):
-        right_list = [self.a + (self.b - self.a) * max(SequenceMixin.SEQUENCE[i], SequenceMixin.SEQUENCE[i + 1])
-                      for i in range(0, len(SequenceMixin.SEQUENCE), 2)
-                      if SequenceMixin.SEQUENCE[i] < SequenceMixin.SEQUENCE[i + 1]]
-        left_list = [self.a + (self.b - self.a) * min(SequenceMixin.SEQUENCE[i], SequenceMixin.SEQUENCE[i + 1])
-                     for i in range(0, len(SequenceMixin.SEQUENCE), 2)
-                     if SequenceMixin.SEQUENCE[i] + SequenceMixin.SEQUENCE[i + 1] < 1]
+        right_list = [
+            self.a + (self.b - self.a) * max(SequenceMixin.SEQUENCE[i], SequenceMixin.SEQUENCE[i + 1])
+            for i in range(0, SequenceMixin.LEN, 2)
+            if SequenceMixin.SEQUENCE[i] < SequenceMixin.SEQUENCE[i + 1]
+        ]
+        left_list = [
+            self.a + (self.b - self.a) * min(SequenceMixin.SEQUENCE[i], SequenceMixin.SEQUENCE[i + 1])
+            for i in range(0, SequenceMixin.LEN, 2)
+            if SequenceMixin.SEQUENCE[i] + SequenceMixin.SEQUENCE[i + 1] < 1
+        ]
 
         return right_list + left_list
 

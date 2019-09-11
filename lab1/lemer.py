@@ -10,12 +10,11 @@ class LemerGenerator:
         self.m = m
         self.lemer_n = n
 
+        # all checks are optional
         if r0 >= (pow(2, self.lemer_n) - 1):
             raise self.ParametersInitializingException(r0, ParamErrors.NOT_LESS.value, 'R0')
         elif not sympy.isprime(r0):
             raise self.ParametersInitializingException(r0, ParamErrors.NOT_PRIME.value, 'R0')
-        # elif not find_ones_in_binary(r0):
-        #     raise self.ParametersInitializingException(r0, ParamErrors.NOT_ENOUGH_ONES.value, 'R0')
         else:
             self.r0 = r0
 
